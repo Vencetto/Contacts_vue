@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <local-header></local-header>
+    <contact-list v-bind:contactArr="store"></contact-list> 
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from '@/components/Header';
+import store from "@/store/store";
+import ContactList from '@/components/ContactList';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    'local-header':Header,
+    'contact-list':ContactList
+  },
+  data: function() {
+    return {
+      store:store
+    };
   }
 }
 </script>
@@ -19,10 +27,10 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+}
+body {
+  margin: 0;
+  background-color: #f9f3e6;
 }
 </style>
