@@ -1,6 +1,7 @@
 <template>
     <div class='contact__list'>
-        <add-button v-on:click="showModal"> </add-button>
+        <new-contact-input v-if='showInput'></new-contact-input>
+        <add-button v-on:click.native="addContact"></add-button>
         <contact-short v-for="con of contactArr" v-bind:key="con.id"
             v-bind:lName="con.lName" v-bind:fName="con.fName" v-bind:email="con.email" v-bind:profession="con.profession" v-bind:age="con.age">
         </contact-short>
@@ -10,21 +11,37 @@
 <script>
 import AddButton from '@/components/AddButton';
 import ContactShort from '@/components/ContactShort';
+import NewContactInput from '@/components/NewContactInput';
 
 export default {
     name: 'ContactList',
     props: {
         contactArr:{}
         },
+    data: function() {
+        return {
+            showInput: false
+        };
+    },
     components: {
         'contact-short': ContactShort,
-        'add-button': AddButton
+        'add-button': AddButton,
+        'new-contact-input': NewContactInput
     },
     methods: {
         addContact: function() {
-
-        },
-        showModal: function() {
+            this.showInput = !this.showInput;
+            // save input data to arr
+            // return this.contactArr.push(
+            //     {
+            //         id: String(this.contactArr.length),
+            //         fName:"Test",
+            //         lName:"2",
+            //         phoneNumber:"+09",
+            //         profession:"Pjer",
+            //         email:"e@test.email",
+            //         age:"-7"
+            //     });
 
         }
     }
@@ -36,7 +53,6 @@ export default {
 .contact__list{
     width: 800px;
     margin: auto;
-    position: relative;
 }
 .img__add-wrapper{
    position: fixed;
