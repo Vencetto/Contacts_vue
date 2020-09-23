@@ -1,11 +1,16 @@
 <template>
   <div class="contact__list">
+    <modal-ask
+      v-if="showModal"
+      v-on:delete-approved="deleteContact"
+      v-on:delete-declined="showHideModal"
+    ></modal-ask>
     <new-contact-input
       v-if="showInput"
       v-on:submit-user-create="addContact"
-      v-on:close-input="showInput = !showInput"
+      v-on:close-input="showHideInput"
     ></new-contact-input>
-    <add-button v-on:click.native="showInput = !showInput"></add-button>
+    <add-button v-on:click.native="showHideInput"></add-button>
     <contact-short
       v-for="con of contactArr"
       v-bind:key="con.id"
@@ -14,6 +19,7 @@
       v-bind:email="con.email"
       v-bind:profession="con.profession"
       v-bind:age="con.age"
+      v-on:delete-contact="showHideModal"
     ></contact-short>
   </div>
 </template>
@@ -22,6 +28,7 @@
 import AddButton from "@/components/AddButton";
 import ContactShort from "@/components/ContactShort";
 import NewContactInput from "@/components/NewContactInput";
+import ModalAsk from "@/components/ModalAsk";
 
 export default {
   name: "ContactList",
@@ -31,18 +38,34 @@ export default {
   data: function () {
     return {
       showInput: false,
+      showModal: false,
     };
   },
   components: {
     "contact-short": ContactShort,
     "add-button": AddButton,
     "new-contact-input": NewContactInput,
+    "modal-ask": ModalAsk,
   },
   methods: {
-      // it needs to change id in this place so they won't duplicate or etc.
     addContact: function (newContactObj) {
-        newContactObj.id = this.contactArr.length;
+      this.showHideInput();
+      // it needs to change id here so contacts won't duplicate or etc.
+      newContactObj.id = this.contactArr.length;
       return this.contactArr.push(newContactObj);
+    },
+    showHideInput: function () {
+      // shoes or disables input window
+      this.showInput = !this.showInput;
+    },
+    deleteContact: function (event) {
+        this.showHideModal();
+        console.log(event.currentTarget)
+        
+    },
+    showHideModal: function () {
+      // shows or disables modal window
+      this.showModal = !this.showModal;
     },
   },
 };
