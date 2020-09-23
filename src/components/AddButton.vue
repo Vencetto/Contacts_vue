@@ -14,7 +14,10 @@ export default {
 .img__add{
     height: 45px;
     width: 45px;
+    margin: 5px;
 }
-
+.img__add-wrapper:hover{
+  background-color: #fff;
+}
 </style>
 

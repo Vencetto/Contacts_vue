@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .contact__list{
-    width: 890px;
+    width: 800px;
     margin: auto;
     position: relative;
 }
@@ -50,6 +50,6 @@ export default {
    border-radius: 50%;
 }
 .img__add-wrapper:hover{
-   box-shadow: 3px 3px 3px rgba(232, 170, 140, 0.4)
+   box-shadow: 3px 3px 3px rgba(232, 170, 140, 0.4);
 }
 </style>
