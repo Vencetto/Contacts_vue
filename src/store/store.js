@@ -9,7 +9,7 @@ const store = [{
 },
 {
     id: "1",
-    fName:"Mike",
+    fName:"",
     lName:"Wazowski",
     phoneNumber:"+0220125349",
     profession:"Project manager",

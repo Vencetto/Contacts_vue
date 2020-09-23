@@ -2,7 +2,8 @@
   <div>
     <div class="contact__short">
         <div class="header__wrapper">
-            <h1>{{lName + ", " + fName + " (" + age + " years)"}}</h1>
+            <h1 v-if="age">{{lName + ", " + fName + " (" + age + " years)"}}</h1>
+            <h1 v-else>{{lName + ", " + fName}}</h1>
             <button class="close__button"></button>
         </div>
       <p class="p__profession">{{profession}}</p>
