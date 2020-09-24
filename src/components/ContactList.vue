@@ -2,7 +2,7 @@
   <div class="contact__list">
     <modal-ask
       v-if="showModal"
-      v-on:delete-approved="deleteContactYes"
+      v-on:delete-approved="deleteContact"
       v-on:delete-declined="showHideModal"
     ></modal-ask>
     <new-contact-input
@@ -12,15 +12,15 @@
     ></new-contact-input>
     <add-button v-on:click.native="showHideInput"></add-button>
     <contact-short
-      v-for="con of contactArr"
-      v-bind:key="con.id"
-      v-bind:id="con.id"
-      v-bind:lName="con.lName"
-      v-bind:fName="con.fName"
-      v-bind:email="con.email"
-      v-bind:profession="con.profession"
-      v-bind:age="con.age"
-      v-on:delete-contact="deleteContact"
+      v-for="(item, key) in contactColl"
+      v-bind:key="key"
+      v-bind:id="key"
+      v-bind:lName="item.lName"
+      v-bind:fName="item.fName"
+      v-bind:email="item.email"
+      v-bind:profession="item.profession"
+      v-bind:age="item.age"
+      v-on:save-id="saveId"
     ></contact-short>
   </div>
 </template>
@@ -34,13 +34,12 @@ import ModalAsk from "@/components/ModalAsk";
 export default {
   name: "ContactList",
   props: {
-    contactArr: {},
+    contactColl: {},
   },
   data: function () {
     return {
       showInput: false,
       showModal: false,
-      needDelete: false,
       deleteId: null
     };
   },
@@ -51,27 +50,25 @@ export default {
     "modal-ask": ModalAsk,
   },
   methods: {
+    // this fucn pass task up to parent component
     addContact: function (newContactObj) {
       this.showHideInput();
-      // it needs to change id here so contacts won't duplicate or etc.
-      // newContactObj.id = this.contactArr.length;
-      return this.contactArr.push(newContactObj);
+      this.$emit('create-contact', newContactObj);
     },
     showHideInput: function () {
       // shoes or disables input window
       this.showInput = !this.showInput;
     },
-    deleteContact: function (id) {
+    saveId: function (id) {
       this.showHideModal();
       this.deleteId = id;
-      // if (this.needDelete)
-      //   this.$emit('delete-contact', id);
     },
     showHideModal: function () {
       // shows or disables modal window
       this.showModal = !this.showModal;
     },
-    deleteContactYes: function() {
+    // this fucn pass task up to parent component
+    deleteContact: function() {
       this.$emit('delete-contact', this.deleteId);
       this.showHideModal();
     }

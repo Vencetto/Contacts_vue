@@ -2,8 +2,9 @@
   <div id="app">
     <local-header></local-header>
     <contact-list
-      v-bind:contactArr="store"
+      v-bind:contactColl="store"
       v-on:delete-contact="deleteContact"
+      v-on:create-contact="addContact"
     ></contact-list>
   </div>
 </template>
@@ -26,10 +27,15 @@ export default {
   },
   methods: {
     deleteContact: function (id) {
-      this.store = this.store.filter(el => {
-        return el.id != id;
-      });
+      delete(this.store[id]);
     },
+    addContact: function (newContactObj) {
+      this.store[String(this.createId())] = newContactObj;
+    },
+    createId: function() {
+      // creates pseudo hash for Id
+      return '_' + Math.random().toString(36).substr(2, 9);
+    }
   },
 };
 </script>

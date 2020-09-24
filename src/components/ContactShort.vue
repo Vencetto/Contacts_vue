@@ -4,7 +4,7 @@
         <div class="header__wrapper">
             <h1 v-if="age">{{lName + ", " + fName + " (" + age + " years)"}}</h1>
             <h1 v-else>{{lName + ", " + fName}}</h1>
-            <button class="close__button" v-on:click="$emit('delete-contact', id)"></button>
+            <button class="close__button" v-on:click="$emit('save-id', id)"></button>
         </div>
       <p class="p__profession">{{profession}}</p>
       <div class="bottom__wrapper">
