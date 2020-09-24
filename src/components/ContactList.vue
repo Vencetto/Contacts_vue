@@ -2,7 +2,7 @@
   <div class="contact__list">
     <modal-ask
       v-if="showModal"
-      v-on:delete-approved="deleteContact"
+      v-on:delete-approved="deleteContactYes"
       v-on:delete-declined="showHideModal"
     ></modal-ask>
     <new-contact-input
@@ -14,12 +14,13 @@
     <contact-short
       v-for="con of contactArr"
       v-bind:key="con.id"
+      v-bind:id="con.id"
       v-bind:lName="con.lName"
       v-bind:fName="con.fName"
       v-bind:email="con.email"
       v-bind:profession="con.profession"
       v-bind:age="con.age"
-      v-on:delete-contact="showHideModal"
+      v-on:delete-contact="deleteContact"
     ></contact-short>
   </div>
 </template>
@@ -39,6 +40,8 @@ export default {
     return {
       showInput: false,
       showModal: false,
+      needDelete: false,
+      deleteId: null
     };
   },
   components: {
@@ -51,22 +54,27 @@ export default {
     addContact: function (newContactObj) {
       this.showHideInput();
       // it needs to change id here so contacts won't duplicate or etc.
-      newContactObj.id = this.contactArr.length;
+      // newContactObj.id = this.contactArr.length;
       return this.contactArr.push(newContactObj);
     },
     showHideInput: function () {
       // shoes or disables input window
       this.showInput = !this.showInput;
     },
-    deleteContact: function (event) {
-        this.showHideModal();
-        console.log(event.currentTarget)
-        
+    deleteContact: function (id) {
+      this.showHideModal();
+      this.deleteId = id;
+      // if (this.needDelete)
+      //   this.$emit('delete-contact', id);
     },
     showHideModal: function () {
       // shows or disables modal window
       this.showModal = !this.showModal;
     },
+    deleteContactYes: function() {
+      this.$emit('delete-contact', this.deleteId);
+      this.showHideModal();
+    }
   },
 };
 </script>
